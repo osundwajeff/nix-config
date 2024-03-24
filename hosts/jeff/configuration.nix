@@ -12,7 +12,7 @@
       ../../config/console-apps.nix
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      #../../config/bootsplash.nix
+      ../../config/bootsplash.nix
       #../../config/android-sdk.nix
       #../../config/upgrades.nix
       #../../config/arduino.nix
@@ -26,8 +26,8 @@
       ../../config/fonts.nix
       ../../config/games.nix
       ../../config/display-server.nix
-      #../../config/gnome-desktop-wayland.nix
-      ../../config/gnome-desktop-x11.nix
+      ../../config/gnome-desktop-wayland.nix
+      #../../config/gnome-desktop-x11.nix
       ../../config/gnome-desktop-apps.nix
       #../../config/deepin-desktop.nix
       #../../config/budgie-deskop.nix
@@ -81,7 +81,7 @@
   #boot.initrd.luks.devices."luks-cda39835-d2a7-42f1-9729-8a84a4a8ae60".device = "/dev/disk/by-uuid/cda39835-d2a7-42f1-9729-8a84a4a8ae60";
   #boot.initrd.luks.devices."luks-cda39835-d2a7-42f1-9729-8a84a4a8ae60".keyFile = "/crypto_keyfile.bin";
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "jeff"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -156,5 +156,25 @@
   };
 
   security.pki.certificateFiles = [ "/etc/ssl/certs/kartoza_ca_chain.crt" ];
+
+  # All of the following should be run as root
+  # sudo su -
+  #
+  # To start the VPN do:
+  # systemctl start openvpn-vpn.service
+  #
+  # To enter your password
+  # systemd-tty-ask-password-agent
+  #
+  # To stop the vpn
+  # systemctl start openvpn-vpn.service
+
+  services.openvpn.servers.vpn = {
+    config = "config /home/jeff/.openvpn/command/jeff_orange.ovpn";
+    autoStart = false;
+    authUserPass.password = "";
+    authUserPass.username = "map_jeff";
+    updateResolvConf = false;
+  };
 
 }
