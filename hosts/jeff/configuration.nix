@@ -12,7 +12,7 @@
       ../../config/console-apps.nix
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../config/bootsplash.nix
+      #../../config/bootsplash.nix
       #../../config/android-sdk.nix
       #../../config/upgrades.nix
       #../../config/arduino.nix
@@ -26,12 +26,14 @@
       ../../config/fonts.nix
       ../../config/games.nix
       ../../config/display-server.nix
-      ../../config/gnome-desktop-wayland.nix
+      #../../config/gnome-desktop-wayland.nix
+      #../../config/gnome-desktop-gdm.nix
       #../../config/gnome-desktop-x11.nix
-      ../../config/gnome-desktop-apps.nix
+      #../../config/gnome-desktop-apps.nix
       #../../config/deepin-desktop.nix
       #../../config/budgie-deskop.nix
-      #../../config/plasma-desktop.nix
+      #../../config/cinnamon-desktop.nix
+      ../../config/plasma-desktop.nix
       #../../config/xfce-desktop.nix
       #../../config/pantheon-desktop.nix
       ../../config/gui-apps.nix
@@ -43,6 +45,7 @@
       #../../config/nvidia.nix
       #../../config/ntfs.nix
       ../../config/obs.nix
+      ../../config/openvpn.nix
       ../../config/postgres.nix
       ../../config/printing.nix
       ../../config/python.nix
@@ -145,15 +148,28 @@
   ### see https://flatpak.org/setup/NixOS
   services.flatpak.enable = true;
 
-  networking.firewall = { 
-    enable = true;
-    allowedTCPPortRanges = [ 
-      { from = 1714; to = 1764; } # KDE Connect
-    ];  
-    allowedUDPPortRanges = [ 
-      { from = 1714; to = 1764; } # KDE Connect
-    ];  
+  ### Bleeding edge kernel
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Bluetooth
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  #services.blueman.enable = true;
+  hardware.bluetooth.settings = {
+    General = {
+      Enable = "Source,Sink,Media,Socket";
+    };
   };
+
+  #networking.firewall = { 
+  #  enable = true;
+  #  allowedTCPPortRanges = [ 
+  #    { from = 1714; to = 1764; } # KDE Connect
+  #  ];  
+  #  allowedUDPPortRanges = [ 
+  #    { from = 1714; to = 1764; } # KDE Connect
+  #  ];  
+  #};
 
   security.pki.certificateFiles = [ "/etc/ssl/certs/kartoza_ca_chain.crt" ];
 
@@ -176,5 +192,8 @@
     authUserPass.username = "map_jeff";
     updateResolvConf = false;
   };
+
+  # for openvpn3
+  # programs.openvpn3.enable = true;
 
 }
