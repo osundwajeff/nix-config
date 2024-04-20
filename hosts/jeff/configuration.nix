@@ -52,11 +52,13 @@
       ../../config/quickemu.nix
       #../../config/pycharm-community.nix
       ../../config/qtcreator.nix
+      #../../config/qgis-stable.nix
       ../../config/qgis.nix # Upstream packaged version
       #../../config/qgis-dev.nix # My own overlay maintained in packages/qgis
       #../../config/rstudio.nix
       ../../config/ssh.nix
       ../../config/starship.nix
+      ../../config/steam.nix
       ../../config/syncthing.nix
       #../../config/tailscale.nix
       #../../config/uxplay.nix
@@ -170,8 +172,6 @@
   #    { from = 1714; to = 1764; } # KDE Connect
   #  ];  
   #};
-
-  security.pki.certificateFiles = [ "/etc/ssl/certs/kartoza_ca_chain.crt" ];
 
   # All of the following should be run as root
   # sudo su -
